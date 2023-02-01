@@ -1,28 +1,36 @@
-import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
-      <Text style={styles.text}>I'm relly like creating user interfaces</Text>
-      <Text style={styles.text}>Hello world!</Text>
-      <Button title="Try to tap me!!!" />
+      <View style={styles.inputContainer}>
+        <TextInput placeholder={"Type your idea"} style={styles.inputText} />
+        <Button title={"Add idea"} />
+      </View>
+      <View>
+        <Text>List of ideas</Text>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    paddingTop: 50,
+    paddingEnd: 15,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
-  text: {
-    margin: 16,
-    padding: 5,
-    borderWidth: 1,
-    borderColor: "green",
+  inputContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  inputText: {
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 10,
+    borderWidth: 2,
+    borderColor: "#8de0e2",
+    width: "70%",
   },
 });
