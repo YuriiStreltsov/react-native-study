@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {
   Button,
-  ScrollView,
+  FlatList,
   StyleSheet,
   Text,
   TextInput,
@@ -15,8 +15,10 @@ export default function App() {
     setEnteredIdeaText(enteredText);
   };
   const addIdeaHandler = () => {
-    setIdeaList((ideaList) => [enteredIdeaText, ...ideaList]);
-    setEnteredIdeaText("");
+    setIdeaList((ideaList) => [
+      { text: enteredIdeaText, id: Math.random().toString() },
+      ...ideaList,
+    ]);
   };
   return (
     <View style={styles.container}>
@@ -29,18 +31,18 @@ export default function App() {
         <Button title={"Add idea"} onPress={addIdeaHandler} />
       </View>
       <View style={styles.ideaContainer}>
-        <ScrollView>
-          <Text style={styles.ideaContainerTitle}>
-            {ideaList.length !== 0 ? "Your ideas" : "No idea yet"}
-          </Text>
-          {ideaList.length !== 0
-            ? ideaList.map((idea) => (
-                <View key={idea} style={styles.ideaItem}>
-                  <Text style={styles.ideaItemText}>{idea}</Text>
-                </View>
-              ))
-            : null}
-        </ScrollView>
+        <Text style={styles.ideaContainerTitle}>
+          {ideaList.length !== 0 ? "Your ideas" : "No idea yet"}
+        </Text>
+        <FlatList
+          data={ideaList}
+          renderItem={(itemData) => (
+            <View style={styles.ideaItem}>
+              <Text style={styles.ideaItemText}>{itemData.item.text}</Text>
+            </View>
+          )}
+          keyExtractor={(item) => item.id}
+        />
       </View>
     </View>
   );
