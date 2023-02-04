@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Button,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 export default function App() {
   const [enteredIdeaText, setEnteredIdeaText] = useState("");
@@ -8,7 +15,7 @@ export default function App() {
     setEnteredIdeaText(enteredText);
   };
   const addIdeaHandler = () => {
-    setIdeaList((ideaList) => [...ideaList, enteredIdeaText]);
+    setIdeaList((ideaList) => [enteredIdeaText, ...ideaList]);
     setEnteredIdeaText("");
   };
   return (
@@ -22,14 +29,18 @@ export default function App() {
         <Button title={"Add idea"} onPress={addIdeaHandler} />
       </View>
       <View style={styles.ideaContainer}>
-        <Text style={styles.ideaContainerTitle}>List of ideas</Text>
-        {ideaList.length !== 0
-          ? ideaList.map((idea) => (
-              <View key={idea} style={styles.ideaItem}>
-                <Text style={styles.ideaItemText}>{idea}</Text>
-              </View>
-            ))
-          : null}
+        <ScrollView>
+          <Text style={styles.ideaContainerTitle}>
+            {ideaList.length !== 0 ? "Your ideas" : "No idea yet"}
+          </Text>
+          {ideaList.length !== 0
+            ? ideaList.map((idea) => (
+                <View key={idea} style={styles.ideaItem}>
+                  <Text style={styles.ideaItemText}>{idea}</Text>
+                </View>
+              ))
+            : null}
+        </ScrollView>
       </View>
     </View>
   );
