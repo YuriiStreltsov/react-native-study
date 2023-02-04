@@ -7,8 +7,8 @@ export default function App() {
         <TextInput placeholder={"Type your idea"} style={styles.inputText} />
         <Button title={"Add idea"} />
       </View>
-      <View>
-        <Text>List of ideas</Text>
+      <View style={styles.ideaContainer}>
+        <Text style={styles.ideaContainerTitle}>List of ideas</Text>
       </View>
     </View>
   );
@@ -16,21 +16,31 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     paddingTop: 50,
-    paddingEnd: 15,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingHorizontal: 16,
   },
   inputContainer: {
+    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 20,
+    borderBottomWidth: 1,
+    borderColor: "#cccccc",
   },
   inputText: {
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingLeft: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
     borderWidth: 2,
     borderColor: "#8de0e2",
     width: "70%",
+  },
+  ideaContainer: {
+    flex: 5,
+  },
+  ideaContainerTitle: {
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });
