@@ -24,7 +24,11 @@ export default function App() {
       <View style={styles.ideaContainer}>
         <Text style={styles.ideaContainerTitle}>List of ideas</Text>
         {ideaList.length !== 0
-          ? ideaList.map((idea) => <Text key={idea}>{idea}</Text>)
+          ? ideaList.map((idea) => (
+              <View key={idea} style={styles.ideaItem}>
+                <Text style={styles.ideaItemText}>{idea}</Text>
+              </View>
+            ))
           : null}
       </View>
     </View>
@@ -59,5 +63,14 @@ const styles = StyleSheet.create({
   ideaContainerTitle: {
     textAlign: "center",
     fontWeight: "bold",
+  },
+  ideaItem: {
+    margin: 8,
+    padding: 8,
+    borderRadius: 8,
+    backgroundColor: "rgb(2,88,121)",
+  },
+  ideaItemText: {
+    color: "white",
   },
 });
