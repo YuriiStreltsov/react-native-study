@@ -1,14 +1,31 @@
+import { useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function App() {
+  const [enteredIdeaText, setEnteredIdeaText] = useState("");
+  const [ideaList, setIdeaList] = useState([]);
+  const ideaInputHandler = (enteredText) => {
+    setEnteredIdeaText(enteredText);
+  };
+  const addIdeaHandler = () => {
+    setIdeaList((ideaList) => [...ideaList, enteredIdeaText]);
+    setEnteredIdeaText("");
+  };
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
-        <TextInput placeholder={"Type your idea"} style={styles.inputText} />
-        <Button title={"Add idea"} />
+        <TextInput
+          placeholder={"Type your idea"}
+          style={styles.inputText}
+          onChangeText={ideaInputHandler}
+        />
+        <Button title={"Add idea"} onPress={addIdeaHandler} />
       </View>
       <View style={styles.ideaContainer}>
         <Text style={styles.ideaContainerTitle}>List of ideas</Text>
+        {ideaList.length !== 0
+          ? ideaList.map((idea) => <Text key={idea}>{idea}</Text>)
+          : null}
       </View>
     </View>
   );
