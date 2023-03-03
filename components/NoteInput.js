@@ -20,7 +20,11 @@ function NoteInput({ addNoteHandler }) {
         onChangeText={noteInputHandler}
         value={enteredNoteText}
       />
-      <Button title={"Add idea"} onPress={buttonOnClickHandler} />
+      <Button
+        title={"Add idea"}
+        onPress={buttonOnClickHandler}
+        disabled={!enteredNoteText}
+      />
     </View>
   );
 }
