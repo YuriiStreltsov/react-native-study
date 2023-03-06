@@ -1,14 +1,23 @@
 import { useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { Button, FlatList, StyleSheet, Text, View } from "react-native";
 import NoteItem from "./components/NoteItem";
 import NoteInput from "./components/NoteInput";
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
+  const [isModalInputVisible, setIsModalVisible] = useState(false);
   const [noteList, setNoteList] = useState([]);
 
+  const toggleModalVisible = () => {
+    setIsModalVisible(!isModalInputVisible);
+  };
   const addNoteHandler = (enteredNoteText) => {
     setNoteList((noteList) => [
-      { text: enteredNoteText, id: Math.random().toString() },
+      {
+        text: enteredNoteText,
+        id: Math.random().toString(),
+        color: randomHexColor(),
+      },
       ...noteList,
     ]);
   };
@@ -20,25 +29,38 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
-      <NoteInput addNoteHandler={addNoteHandler} />
-      <View style={styles.noteContainer}>
-        <Text style={styles.noteContainerTitle}>
-          {noteList.length !== 0 ? "Your ideas" : "No idea yet"}
-        </Text>
-        <FlatList
-          data={noteList}
-          renderItem={(itemData) => (
-            <NoteItem
-              itemText={itemData.item.text}
-              itemId={itemData.item.id}
-              onDelete={deleteNoteHandler}
-            />
-          )}
-          keyExtractor={(item) => item.id}
+    <>
+      <StatusBar style="dark" />
+      <View style={styles.container}>
+        <Button
+          title={"Add new note"}
+          color={"#025879FF"}
+          onPress={toggleModalVisible}
         />
+        <NoteInput
+          addNoteHandler={addNoteHandler}
+          isVisible={isModalInputVisible}
+          onClose={toggleModalVisible}
+        />
+        <View style={styles.noteContainer}>
+          <Text style={styles.noteContainerTitle}>
+            {noteList.length !== 0 ? "Your ideas" : "No idea yet"}
+          </Text>
+          <FlatList
+            data={noteList}
+            renderItem={(itemData) => (
+              <NoteItem
+                itemText={itemData.item.text}
+                itemId={itemData.item.id}
+                colorItem={itemData.item.color}
+                onDelete={deleteNoteHandler}
+              />
+            )}
+            keyExtractor={(item) => item.id}
+          />
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
@@ -56,3 +78,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+
+function randomHexColor() {
+  return "#ffffff".replace(/f/g, () => {
+    return Math.round(Math.random() * 16).toString(16);
+  });
+}

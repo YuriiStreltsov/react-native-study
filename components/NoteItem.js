@@ -1,18 +1,24 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
-function NoteItem({ itemText, itemId, onDelete }) {
+function NoteItem({ itemText, itemId, colorItem, onDelete }) {
   const deleteNoteHandler = () => {
     onDelete(itemId);
   };
 
   return (
-    <View style={style.noteItem}>
+    <View style={[style.noteItem, { backgroundColor: colorItem }]}>
       <Pressable
         onPress={deleteNoteHandler}
-        android_ripple={{ color: "rgb(196,229,243)" }}
+        android_ripple={{ color: "C4E5F3FF" }}
         style={({ pressed }) => pressed && style.pressedItem}
       >
-        <Text style={style.noteItemText}>{itemText}</Text>
+        <View style={style.contentItem}>
+          <Image
+            source={require("../assets/images/sticky_note.png")}
+            style={style.noteImage}
+          />
+          <Text style={style.noteItemText}>{itemText}</Text>
+        </View>
       </Pressable>
     </View>
   );
@@ -24,10 +30,20 @@ const style = StyleSheet.create({
   noteItem: {
     margin: 8,
     borderRadius: 8,
-    backgroundColor: "rgb(2,88,121)",
+    borderWidth: 2,
+    borderColor: "#dddddd",
   },
   pressedItem: {
     opacity: 0.5,
+  },
+  contentItem: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  noteImage: {
+    width: 30,
+    height: 30,
+    marginRight: 10,
   },
   noteItemText: {
     color: "white",
