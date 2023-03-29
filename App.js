@@ -1,28 +1,50 @@
-import {ImageBackground, StyleSheet, SafeAreaView, Platform, StatusBar} from 'react-native';
-import StartGameScreen from "./screens/StartGameScreen";
-import {LinearGradient} from "expo-linear-gradient";
-import {useState} from "react";
-import GameScreen from "./screens/GameScreen";
-import Colors from "./constants/colors";
+import {
+    ImageBackground,
+    StyleSheet,
+    SafeAreaView,
+    Platform,
+    StatusBar,
+} from 'react-native';
+import StartGameScreen from './screens/StartGameScreen';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useState } from 'react';
+import GameScreen from './screens/GameScreen';
+import GameOverScreen from './screens/GameOverScreen';
+import Colors from './constants/colors';
 
 export default function App() {
-    const [userNumber, setUserNumber] = useState()
+    const [userNumber, setUserNumber] = useState();
+    const [gameIsOver, setGameIsOver] = useState(true);
 
     function pickedNumberHandler(pickedNumber) {
-        setUserNumber(pickedNumber)
+        setUserNumber(pickedNumber);
+        setGameIsOver(false);
     }
 
-    let screen = <StartGameScreen onPickNumber={pickedNumberHandler}/>
+    function gameOverHandler() {
+        setGameIsOver(true);
+    }
+
+    let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />;
 
     if (userNumber) {
-        screen = <GameScreen/>
+        screen = (
+            <GameScreen userNumber={userNumber} onGameOver={gameOverHandler} />
+        );
+    }
+
+    if (gameIsOver && userNumber) {
+        screen = <GameOverScreen />;
     }
 
     return (
-        <LinearGradient colors={[Colors.primary700, Colors.accent500]} style={styles.rootScreen}>
+        <LinearGradient
+            colors={[Colors.primary700, Colors.accent500]}
+            style={styles.rootScreen}
+        >
             <ImageBackground
                 source={require('./assets/images/background.png')}
-                resizeMode='cover'
+                resizeMode="cover"
                 style={styles.rootScreen}
                 imageStyle={styles.backgroundImage}
             >
@@ -31,20 +53,19 @@ export default function App() {
                 </SafeAreaView>
             </ImageBackground>
         </LinearGradient>
-
     );
 }
 
 const styles = StyleSheet.create({
     safeAreaWrapper: {
         flex: 1,
-        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
 
     rootScreen: {
         flex: 1,
     },
     backgroundImage: {
-        opacity: 0.15
-    }
+        opacity: 0.15,
+    },
 });
