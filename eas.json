@@ -1,36 +1,36 @@
 {
-  "cli": {
-    "version": ">= 3.8.1"
-  },
-  "build": {
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal",
-      "ios": {
-        "resourceClass": "m-medium"
-      }
+    "cli": {
+        "version": ">= 3.8.1"
     },
-    "preview": {
-      "distribution": "internal",
-      "ios": {
-        "resourceClass": "m-medium"
-      },
-      "android": {
-        "buildType": "apk"
-      }
+    "build": {
+        "development": {
+            "developmentClient": true,
+            "distribution": "internal",
+            "ios": {
+                "resourceClass": "m-medium"
+            }
+        },
+        "preview": {
+            "distribution": "internal",
+            "ios": {
+                "resourceClass": "m-medium"
+            },
+            "android": {
+                "buildType": "apk"
+            }
+        },
+        "production": {
+            "ios": {
+                "resourceClass": "m-medium"
+            }
+        }
     },
-    "production": {
-      "ios": {
-        "resourceClass": "m-medium"
-      }
+    "submit": {
+        "production": {
+            "android": {
+                "serviceAccountKeyPath": "../path/to/keyPath.json",
+                "track": "internal"
+            }
+        }
     }
-  },
-  "submit": {
-    "production": {
-      "android": {
-        "serviceAccountKeyPath": "../path/to/keyPath.json",
-        "track": "internal"
-      }
-    }
-  }
 }
