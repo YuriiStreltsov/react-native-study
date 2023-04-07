@@ -2,7 +2,6 @@ import {
     ImageBackground,
     Platform,
     SafeAreaView,
-    StatusBar,
     StyleSheet,
 } from 'react-native';
 import StartGameScreen from './screens/StartGameScreen';
@@ -10,6 +9,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useCallback, useEffect, useState } from 'react';
 import GameScreen from './screens/GameScreen';
 import GameOverScreen from './screens/GameOverScreen';
+import { StatusBar } from 'expo-status-bar';
 import Colors from './constants/colors';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
@@ -86,24 +86,27 @@ export default function App() {
     }
 
     return (
-        <LinearGradient
-            colors={[Colors.primary700, Colors.accent500]}
-            style={styles.rootScreen}
-        >
-            <ImageBackground
-                source={require('./assets/images/background.png')}
-                resizeMode="cover"
+        <>
+            <StatusBar style="light" />
+            <LinearGradient
+                colors={[Colors.primary700, Colors.accent500]}
                 style={styles.rootScreen}
-                imageStyle={styles.backgroundImage}
             >
-                <SafeAreaView
-                    style={styles.safeAreaWrapper}
-                    onLayout={onLayoutRootView}
+                <ImageBackground
+                    source={require('./assets/images/background.png')}
+                    resizeMode="cover"
+                    style={styles.rootScreen}
+                    imageStyle={styles.backgroundImage}
                 >
-                    {screen}
-                </SafeAreaView>
-            </ImageBackground>
-        </LinearGradient>
+                    <SafeAreaView
+                        style={styles.safeAreaWrapper}
+                        onLayout={onLayoutRootView}
+                    >
+                        {screen}
+                    </SafeAreaView>
+                </ImageBackground>
+            </LinearGradient>
+        </>
     );
 }
 

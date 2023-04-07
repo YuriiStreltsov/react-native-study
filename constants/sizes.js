@@ -29,6 +29,7 @@ const border = {
     RADIUS_SMALL: 10,
     RADIUS_MEDIUM: 20,
     RADIUS_LARGE: 40,
+    RADIUS_EXTRA_LARGE: 150,
 };
 
 const font = {

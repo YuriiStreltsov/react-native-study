@@ -18,7 +18,7 @@ import useDimensionsByOrientation from '../hooks/useDimensionsByOrientation';
 function StartGameScreen({ onPickNumber }) {
     const [enteredNumber, setEnteredNumber] = useState('');
 
-    const marginTopDistance = useDimensionsByOrientation('height', {
+    const { verticalIndent } = useDimensionsByOrientation({
         small: Sizes.whitespace.EXTRA_LARGE,
         large: Sizes.whitespace.BIG_SPACE,
     });
@@ -57,7 +57,7 @@ function StartGameScreen({ onPickNumber }) {
                 <View
                     style={[
                         styles.rootContainer,
-                        { marginTop: marginTopDistance },
+                        { marginTop: verticalIndent },
                     ]}
                 >
                     <Title>Guess My Number</Title>
