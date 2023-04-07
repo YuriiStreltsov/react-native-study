@@ -2,6 +2,7 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import Title from '../components/ui/Title';
 import Colors from '../constants/colors';
 import PrimaryButton from '../components/ui/PrimaryButton';
+import Sizes from '../constants/sizes';
 
 function GameOverScreen({ roundsNumber, userNumber, onStartNewGame }) {
     return (
@@ -38,8 +39,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     imageContainer: {
-        width: 300,
-        height: 300,
+        width: Sizes.isSmallScreenWidth
+            ? Sizes.image.SMALL
+            : Sizes.image.MEDIUM,
+        height: Sizes.isSmallScreenWidth
+            ? Sizes.image.SMALL
+            : Sizes.image.MEDIUM,
         borderRadius: 150,
         borderWidth: 3,
         borderColor: Colors.primary800,
