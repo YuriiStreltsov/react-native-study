@@ -1,11 +1,12 @@
 {
   "expo": {
-    "name": "Guess number",
-    "slug": "react-native-project-guess-number",
+    "name": "Meal",
+    "slug": "react-native-project-meal",
     "version": "1.0.0",
-    "orientation": "default",
+    "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "backgroundColor": "#24180f",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
