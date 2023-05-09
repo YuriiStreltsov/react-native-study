@@ -3,11 +3,32 @@ import { MEALS } from '../data/dummy-data';
 import MealDetails from '../components/meal/MealDetails';
 import Subtitle from '../components/meal/MealDetail/Subtitle';
 import List from '../components/meal/MealDetail/List';
+import { useLayoutEffect } from 'react';
+import IconButton from '../components/ui/IconButton';
 
-function MealDetailsScreen({ route }) {
+function MealDetailsScreen({ route, navigation }) {
     const mealId = route.params.id;
 
     const selectedMeal = MEALS.find((meal) => meal.id === mealId);
+
+    function headerButtonPressHandler() {
+        console.log('Pressed!');
+    }
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => {
+                return (
+                    <IconButton
+                        icon="star"
+                        color="white"
+                        size={24}
+                        onPress={headerButtonPressHandler}
+                    />
+                );
+            },
+        });
+    }, [navigation, headerButtonPressHandler]);
 
     return (
         <ScrollView style={styles.rootContainer}>
