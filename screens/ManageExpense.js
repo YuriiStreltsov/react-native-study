@@ -1,10 +1,14 @@
-import { useLayoutEffect } from 'react';
+import { useContext, useLayoutEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import IconButton from '../components/UI/IconButton';
 import { GlobalStyles } from '../constants/styles';
 import Button from '../components/UI/Button';
+import { ExpensesContext } from '../store/expenses-context';
+import { getRandomLast6DaysData } from '../util/date';
 
 function ManageExpense({ route, navigation }) {
+    const { addExpense, deleteExpense, updateExpense } =
+        useContext(ExpensesContext);
     const editedExpenseId = route.params?.expenseId;
     const isEditing = !!editedExpenseId;
 
@@ -14,7 +18,8 @@ function ManageExpense({ route, navigation }) {
         });
     }, [navigation, isEditing]);
 
-    function deleteExpenseHandler() {
+    function deleteExpenseHandler(id) {
+        deleteExpense(editedExpenseId);
         navigation.goBack();
     }
 
@@ -23,6 +28,19 @@ function ManageExpense({ route, navigation }) {
     }
 
     function confirmHandler() {
+        if (isEditing) {
+            updateExpense(editedExpenseId, {
+                description: 'Old updated',
+                amount: Number((Math.random() * 100).toFixed(2)),
+                date: getRandomLast6DaysData(),
+            });
+        } else {
+            addExpense({
+                description: 'New added',
+                amount: Number((Math.random() * 100).toFixed(2)),
+                date: new Date(Date.now()),
+            });
+        }
         navigation.goBack();
     }
 
