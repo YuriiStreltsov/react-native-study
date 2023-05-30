@@ -5,6 +5,7 @@ import Button from '../UI/Button';
 import { getFormattedDate } from '../../util/date';
 import { getTransformValues } from '../../util/expenseForm';
 import { expensesFormSchema } from '../../validation/expensesFormSchema';
+import { GlobalStyles } from '../../constants/styles';
 
 const initialInputs = {
     amount: { value: '', isValid: true },
@@ -72,6 +73,7 @@ function ExpenseForm({ submitButtonLabel, onCancel, onSubmit, editingValues }) {
                 <Input
                     style={styles.rowInput}
                     label="Amount"
+                    invalid={!inputs.amount.isValid}
                     textInputConfig={{
                         keyboardType: 'decimal-pad',
                         onChangeText: (value) =>
@@ -82,6 +84,7 @@ function ExpenseForm({ submitButtonLabel, onCancel, onSubmit, editingValues }) {
                 <Input
                     style={styles.rowInput}
                     label="Date"
+                    invalid={!inputs.date.isValid}
                     textInputConfig={{
                         placeholder: 'YYYY-MM-DD',
                         maxLength: 10,
@@ -94,6 +97,7 @@ function ExpenseForm({ submitButtonLabel, onCancel, onSubmit, editingValues }) {
 
             <Input
                 label="Description"
+                invalid={!inputs.description.isValid}
                 textInputConfig={{
                     multiline: true,
                     autoCorrect: false,
@@ -103,7 +107,7 @@ function ExpenseForm({ submitButtonLabel, onCancel, onSubmit, editingValues }) {
                 }}
             />
             {formIsInvalid && (
-                <Text>
+                <Text style={styles.errorText}>
                     Invalid input values - please check your entered data
                 </Text>
             )}
@@ -142,6 +146,11 @@ const styles = StyleSheet.create({
     },
     rowInput: {
         flex: 1,
+    },
+    errorText: {
+        textAlign: 'center',
+        color: GlobalStyles.colors.error500,
+        margin: 8,
     },
     buttonsContainer: {
         flexDirection: 'row',
