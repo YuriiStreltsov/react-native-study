@@ -8,10 +8,15 @@ import { getRandomLast6DaysData } from '../util/date';
 import ExpenseForm from '../components/ManageExpense/ExpenseForm';
 
 function ManageExpense({ route, navigation }) {
-    const { addExpense, deleteExpense, updateExpense } =
+    const { expenses, addExpense, deleteExpense, updateExpense } =
         useContext(ExpensesContext);
+
     const editedExpenseId = route.params?.expenseId;
     const isEditing = !!editedExpenseId;
+
+    const selectedExpense = expenses.find(
+        (expense) => expense.id === editedExpenseId
+    );
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -43,6 +48,7 @@ function ManageExpense({ route, navigation }) {
                 submitButtonLabel={isEditing ? 'Update' : 'Add'}
                 onCancel={cancelHandler}
                 onSubmit={confirmHandler}
+                editingValues={selectedExpense}
             />
             {isEditing && (
                 <View style={styles.deleteContainer}>

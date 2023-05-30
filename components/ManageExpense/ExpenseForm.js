@@ -2,13 +2,21 @@ import { StyleSheet, Text, View } from 'react-native';
 import Input from './Input';
 import { useState } from 'react';
 import Button from '../UI/Button';
+import { getFormattedDate } from '../../util/date';
+import { getTransformValues } from '../../util/expenseForm';
 
-function ExpenseForm({ submitButtonLabel, onCancel, onSubmit }) {
-    const [inputValues, setInputValues] = useState({
-        amount: '',
-        date: '',
-        description: '',
-    });
+const initialValues = {
+    amount: '',
+    date: '',
+    description: '',
+};
+
+function ExpenseForm({ submitButtonLabel, onCancel, onSubmit, editingValues }) {
+    const transformedInitialValues = editingValues
+        ? getTransformValues(editingValues)
+        : initialValues;
+
+    const [inputValues, setInputValues] = useState(transformedInitialValues);
 
     function inputChangedHandler(inputIdentifier, enteredValue) {
         setInputValues((currentInputValues) => {
@@ -23,7 +31,7 @@ function ExpenseForm({ submitButtonLabel, onCancel, onSubmit }) {
         const expenseData = {
             amount: +inputValues.amount,
             date: new Date(inputValues.date),
-            description: inputValues.description,
+            description: inputValues.description.trim(),
         };
 
         onSubmit(expenseData);
