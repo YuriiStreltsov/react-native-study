@@ -36,18 +36,8 @@ function ExpenseOverview() {
                     />
                 ),
             })}
+            // initialRouteName="AllExpenses"
         >
-            <BottomTabs.Screen
-                name="AllExpenses"
-                component={AllExpenses}
-                options={{
-                    title: 'All Expenses',
-                    tabBarLabel: 'All Expenses',
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="calendar" size={size} color={color} />
-                    ),
-                }}
-            />
             <BottomTabs.Screen
                 name="RecentExpenses"
                 component={RecentExpenses}
@@ -56,6 +46,18 @@ function ExpenseOverview() {
                     tabBarLabel: 'Recent',
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="hourglass" size={size} color={color} />
+                    ),
+                }}
+            />
+
+            <BottomTabs.Screen
+                name="AllExpenses"
+                component={AllExpenses}
+                options={{
+                    title: 'All Expenses',
+                    tabBarLabel: 'All Expenses',
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="calendar" size={size} color={color} />
                     ),
                 }}
             />
