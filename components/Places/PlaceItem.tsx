@@ -6,7 +6,7 @@ interface IPlaseItemProps {
     onSelect: () => void;
 }
 
-function PlaceItem({ place, onSelect }: IPlaseItemProps): JSX.Element {
+function PlaceItem({ place, onSelect }: IPlaseItemProps) {
     return (
         <Pressable onPress={onSelect}>
             <Image source={{ uri: place.imageUri }} />
