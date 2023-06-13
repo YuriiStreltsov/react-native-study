@@ -1,13 +1,27 @@
 import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, StackRouter } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AllPlaces from "./screens/AllPlaces";
 import AddPlace from "./screens/AddPlace";
 import IconButton from "./components/UI/IconButton";
 import { Colors } from "./constants/colors";
+import MapScreen from "./screens/MapScreen";
+import { Location } from "./types";
 
 const Stack = createNativeStackNavigator();
+
+export type RootStackParamList = {
+  AllPlaces: undefined;
+  AddPlace: Location | undefined;
+  Map: undefined;
+};
+
+declare global {
+  namespace ReactNavigation {
+    interface RootParamList extends RootStackParamList {}
+  }
+}
 
 export default function App() {
   return (
@@ -45,6 +59,7 @@ export default function App() {
               title: "Add a new Place",
             }}
           />
+          <Stack.Screen name="Map" component={MapScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </>
