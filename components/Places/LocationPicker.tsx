@@ -8,7 +8,7 @@ import {
 
 import OutlinedButton from "../UI/OutlinedButton";
 import { Colors } from "../../constants/colors";
-import { getMapPreview } from "../../api/location";
+import { getAddress, getMapPreview } from "../../api/location";
 import {
   useNavigation,
   useRoute,
@@ -37,7 +37,17 @@ function LocationPicker({ onPickLocation }: LocationPickerProps) {
   }, [route, isFocused]);
 
   useEffect(() => {
-    onPickLocation(pickedLocation);
+    async function handleLocation() {
+      if (pickedLocation) {
+        const address = await getAddress(
+          pickedLocation.lat,
+          pickedLocation.lng
+        );
+        onPickLocation({ ...pickedLocation, address });
+      }
+    }
+
+    handleLocation();
   }, [pickedLocation, onPickLocation]);
 
   async function verifyPermissions() {

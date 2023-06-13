@@ -6,6 +6,7 @@ import ImagePicker from "./ImagePicker";
 import LocationPicker from "./LocationPicker";
 import Button from "../UI/Button";
 import { Location } from "../../types";
+import { Place } from "../../model/place";
 
 function PlaceForm() {
   const [enteredTitle, setEnteredTitle] = useState("");
