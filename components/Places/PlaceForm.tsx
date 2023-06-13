@@ -4,6 +4,7 @@ import { TextInput } from "react-native-gesture-handler";
 import { Colors } from "../../constants/colors";
 import ImagePicker from "./ImagePicker";
 import LocationPicker from "./LocationPicker";
+import Button from "../UI/Button";
 
 function PlaceForm() {
   const [enteredTitle, setEnteredTitle] = useState("");
@@ -11,6 +12,9 @@ function PlaceForm() {
   function changeTitleHandler(enteredText: string): void {
     setEnteredTitle(enteredText);
   }
+
+  function savePlaceHandler() {}
+
   return (
     <ScrollView style={styles.form}>
       <View>
@@ -19,6 +23,7 @@ function PlaceForm() {
       </View>
       <ImagePicker />
       <LocationPicker />
+      <Button onPress={savePlaceHandler}>Add place</Button>
     </ScrollView>
   );
 }
