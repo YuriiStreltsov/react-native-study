@@ -3,7 +3,6 @@ import { Location } from "../types";
 interface IPlace {
   title: string;
   imageUri: string;
-  address: string;
   location: Location;
 }
 
@@ -13,11 +12,11 @@ export class Place {
   address: string;
   location: Location;
   id: string;
-  constructor({ title, imageUri, address, location }: IPlace) {
+  constructor({ title, imageUri, location }: IPlace) {
     this.title = title;
     this.imageUri = imageUri;
-    this.address = address;
-    this.location = location;
+    this.address = location.address;
+    this.location = { lat: location.lat, lng: location.lng };
     this.id = new Date().toString() + Math.random().toString();
   }
 }

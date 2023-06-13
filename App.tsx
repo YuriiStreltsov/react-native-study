@@ -8,11 +8,12 @@ import IconButton from "./components/UI/IconButton";
 import { Colors } from "./constants/colors";
 import MapScreen from "./screens/MapScreen";
 import { Location } from "./types";
+import { Place } from "./model/place";
 
 const Stack = createNativeStackNavigator();
 
 export type RootStackParamList = {
-  AllPlaces: undefined;
+  AllPlaces: { place: Place } | undefined;
   AddPlace: Location | undefined;
   Map: undefined;
 };

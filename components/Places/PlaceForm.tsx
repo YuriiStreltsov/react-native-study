@@ -8,7 +8,11 @@ import Button from "../UI/Button";
 import { Location } from "../../types";
 import { Place } from "../../model/place";
 
-function PlaceForm() {
+type PlaceFormProps = {
+  onCreatePlace: (place: Place) => void;
+};
+
+function PlaceForm({ onCreatePlace }: PlaceFormProps) {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [pickedLocation, setPickedLocation] = useState<Location | null>();
   const [selectedImage, setSelectedImage] = useState<string | null>();
@@ -26,9 +30,12 @@ function PlaceForm() {
   }, []);
 
   function savePlaceHandler() {
-    console.log(enteredTitle);
-    console.log(selectedImage);
-    console.log(pickedLocation);
+    const placeData = new Place({
+      title: enteredTitle,
+      imageUri: selectedImage,
+      location: pickedLocation,
+    });
+    onCreatePlace(placeData);
   }
 
   return (

@@ -20,7 +20,6 @@ export async function getAddress(lat: number, lng: number): Promise<string> {
 
   const data: GeocodeResponse = await response.json();
   const address = data.results[0].formatted_address;
-  console.log(data.results[0]);
 
   return address;
 }
