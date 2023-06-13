@@ -4,7 +4,11 @@ import { useState } from "react";
 import { Colors } from "../../constants/colors";
 import OutlinedButton from "../UI/OutlinedButton";
 
-function ImagePicker() {
+type ImagePickerProps = {
+  onTakeImage: (imageUri: string) => void;
+};
+
+function ImagePicker({ onTakeImage }: ImagePickerProps) {
   const [pickedImageUri, setPickedImageUri] = useState<null | string>(null);
 
   async function takeImageHandler(): Promise<void> {
@@ -14,6 +18,7 @@ function ImagePicker() {
       quality: 0.5,
     });
     setPickedImageUri(image.assets[0].uri);
+    onTakeImage(image.assets[0].uri);
   }
 
   let imagePreview = <Text>No image taken yet.</Text>;
