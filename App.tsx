@@ -1,4 +1,6 @@
 import "react-native-gesture-handler";
+import { useState } from "react";
+import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer, StackRouter } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -9,11 +11,15 @@ import { Colors } from "./constants/colors";
 import MapScreen from "./screens/MapScreen";
 import { Location } from "./types";
 import { Place } from "./model/place";
+import { useEffect } from "react";
+import { init } from "./utils/database";
+
+SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
 
 export type RootStackParamList = {
-  AllPlaces: { place: Place } | undefined;
+  AllPlaces: undefined;
   AddPlace: Location | undefined;
   Map: undefined;
 };
@@ -25,6 +31,27 @@ declare global {
 }
 
 export default function App() {
+  const [appIsReady, setAppIsReady] = useState(false);
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await init();
+      } catch (e) {
+        console.log(e);
+      } finally {
+        await SplashScreen.hideAsync();
+        setAppIsReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
+
+  if (!appIsReady) {
+    return null;
+  }
+
   return (
     <>
       <StatusBar style="dark" />

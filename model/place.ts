@@ -4,6 +4,7 @@ interface IPlace {
   title: string;
   imageUri: string;
   location: Location;
+  id?: number;
 }
 
 export class Place {
@@ -11,12 +12,12 @@ export class Place {
   imageUri: string;
   address: string;
   location: Location;
-  id: string;
-  constructor({ title, imageUri, location }: IPlace) {
+  id: number;
+  constructor({ title, imageUri, location, id }: IPlace) {
     this.title = title;
     this.imageUri = imageUri;
     this.address = location.address;
     this.location = { lat: location.lat, lng: location.lng };
-    this.id = new Date().toString() + Math.random().toString();
+    this.id = id;
   }
 }
