@@ -14,6 +14,7 @@ const createTableInstruction = `CREATE TABLE IF NOT EXISTS places (
 
 const insertPlaceInstruction = `INSERT INTO places (title, imageUri, address, lat, lng) VALUES (?, ?, ?, ?, ?)`;
 const fetchPlacesInstruction = `SELECT * FROM places`;
+const fetchPlaceDetailsInstr = `SELECT * FROM places WHERE id = ?`;
 
 export function init() {
   const promise = new Promise((resolve, reject) => {
@@ -85,5 +86,36 @@ export function fetchPlaces() {
     });
   });
 
+  return promise;
+}
+
+export function fetchPlaceDetails(placeId) {
+  const promise = new Promise((resolve, reject) => {
+    database.transaction((tx) => {
+      tx.executeSql(
+        fetchPlaceDetailsInstr,
+        [placeId],
+        (_, result) => {
+          const dbPlace = result.rows._array[0];
+
+          const place = new Place({
+            title: dbPlace.title,
+            imageUri: dbPlace.imageUri,
+            location: {
+              lat: dbPlace.lat,
+              lng: dbPlace.lng,
+              address: dbPlace.address,
+            },
+            id: dbPlace.id,
+          });
+
+          resolve(place);
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
   return promise;
 }

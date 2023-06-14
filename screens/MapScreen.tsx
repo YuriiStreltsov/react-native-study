@@ -8,17 +8,27 @@ import IconButton from "../components/UI/IconButton";
 
 type MapScreenProps = NativeStackScreenProps<RootStackParamList, "Map">;
 
-function MapScreen({ navigation }: MapScreenProps) {
-  const [selectedLocation, setSelectedLocation] = useState<Location | null>();
+function MapScreen({ navigation, route }: MapScreenProps) {
+  const initialParams = route.params && {
+    lat: route.params.location.lat,
+    lng: route.params.location.lng,
+    title: route.params.title,
+  };
+
+  const [selectedLocation, setSelectedLocation] =
+    useState<Location>(initialParams);
 
   const region = {
-    latitude: 46.6093278,
-    longitude: 30.5780954,
+    latitude: initialParams ? initialParams.lat : 46.6093278,
+    longitude: initialParams ? initialParams.lng : 30.5780954,
     latitudeDelta: 0.02,
     longitudeDelta: 0.03,
   };
 
   function selectLocationHandler(event: MapPressEvent) {
+    if (initialParams) {
+      return;
+    }
     const lat = event.nativeEvent.coordinate.latitude;
     const lng = event.nativeEvent.coordinate.longitude;
     setSelectedLocation({ lat, lng });
@@ -36,6 +46,9 @@ function MapScreen({ navigation }: MapScreenProps) {
   }, [selectedLocation, navigation]);
 
   useLayoutEffect(() => {
+    if (initialParams) {
+      return;
+    }
     navigation.setOptions({
       headerRight: ({ tintColor }) => (
         <IconButton
@@ -46,7 +59,7 @@ function MapScreen({ navigation }: MapScreenProps) {
         />
       ),
     });
-  }, [navigation, savePickedLocationHandler]);
+  }, [navigation, savePickedLocationHandler, initialParams]);
 
   return (
     <View style={styles.mapContainer}>
@@ -57,7 +70,7 @@ function MapScreen({ navigation }: MapScreenProps) {
       >
         {selectedLocation && (
           <Marker
-            title="Picked location"
+            title={initialParams ? initialParams.title : "Unknown location"}
             coordinate={{
               latitude: selectedLocation.lat,
               longitude: selectedLocation.lng,

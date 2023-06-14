@@ -13,6 +13,7 @@ import { Location } from "./types";
 import { Place } from "./model/place";
 import { useEffect } from "react";
 import { init } from "./utils/database";
+import PlaceDetails from "./screens/PlaceDetails";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -21,7 +22,8 @@ const Stack = createNativeStackNavigator();
 export type RootStackParamList = {
   AllPlaces: undefined;
   AddPlace: Location | undefined;
-  Map: undefined;
+  Map: { location: Location; title: string } | undefined;
+  PlaceDetails: { placeId: number } | undefined;
 };
 
 declare global {
@@ -88,6 +90,13 @@ export default function App() {
             }}
           />
           <Stack.Screen name="Map" component={MapScreen} />
+          <Stack.Screen
+            name="PlaceDetails"
+            component={PlaceDetails}
+            options={{
+              title: "Loading Place...",
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>
